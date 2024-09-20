@@ -6,9 +6,18 @@ import 'package:tempoid/tempoid.dart';
 void main() {
   test('Should return an id', () {
     final random = FakeRandom();
-    expect(TempoId.generate(randomLength: 1, time: 0, random: random), '00');
-    expect(TempoId.generate(randomLength: 1, time: 0, random: random), '01');
-    expect(TempoId.generate(randomLength: 1, time: 5, random: random), '52');
+    expect(
+      TempoId.generate(randomLength: 1, time: 0, random: random),
+      '000000000',
+    );
+    expect(
+      TempoId.generate(randomLength: 1, time: 0, random: random),
+      '000000001',
+    );
+    expect(
+      TempoId.generate(randomLength: 1, time: 5, random: random),
+      '000000052',
+    );
   });
 
   test('Should handle time overflow', () {
@@ -32,7 +41,7 @@ void main() {
         alphabet: Alphabet.numbers,
         random: random,
       ),
-      '01',
+      '001',
     );
   });
 
@@ -84,6 +93,31 @@ void main() {
         random: random,
       ),
       '2343',
+    );
+  });
+
+  test('Should generate without time', () {
+    final random = FakeRandom();
+    expect(
+      TempoId.generate(
+        timeLength: 0,
+        randomLength: 1,
+        time: 1234,
+        alphabet: Alphabet.numbers,
+        random: random,
+      ),
+      '0',
+    );
+
+    expect(
+      TempoId.generate(
+        timeLength: 0,
+        randomLength: 1,
+        time: 1234,
+        alphabet: Alphabet.numbers,
+        random: random,
+      ),
+      '1',
     );
   });
 
