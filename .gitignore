@@ -7,3 +7,6 @@
 pubspec.lock
 
 .idea/
+
+# FVM Version Cache
+.fvm/
