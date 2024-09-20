@@ -4,8 +4,8 @@ import 'package:tempoid/src/utils.dart';
 
 extension type const TempoId(String value) implements Object {
   /// Generates a new TempoId with a time part and a random part.
-  /// The total length of the ID will be the sum of [timeLength]
-  /// and [randomLength]. Both default to 8.
+  /// The total length of the ID will be the sum of [timeLength] (default 8)
+  /// and [randomLength] (default 13).
   ///
   /// If [time] is not provided, it will default to the current time
   /// in milliseconds since epoch.
