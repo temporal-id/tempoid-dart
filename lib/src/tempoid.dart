@@ -4,16 +4,17 @@ import 'package:tempoid/src/utils.dart';
 
 extension type const TempoId(String value) implements Object {
   factory TempoId.generate({
-    int randomLength = 21,
+    int? timeLength,
+    int? randomLength,
     int? time,
     DateTime? startTime,
-    bool padLeft = false,
+    bool? padLeft,
     Alphabet? alphabet,
     Random? random,
   }) {
+    randomLength ??= 8;
     alphabet ??= _defaultAlphabet;
-
-    Random digestedRandom = random ?? Random.secure();
+    random ??= Random.secure();
 
     final String characters = alphabet.value;
     final int alphabetSize = characters.length;
@@ -22,11 +23,11 @@ extension type const TempoId(String value) implements Object {
     for (int i = 0; i < randomLength; i++) {
       int randomIndex;
       try {
-        randomIndex = digestedRandom.nextInt(alphabetSize);
+        randomIndex = random!.nextInt(alphabetSize);
       } on UnsupportedError catch (_) {
         // fallback if Random.secure() is not supported
-        digestedRandom = Random();
-        randomIndex = digestedRandom.nextInt(alphabetSize);
+        random = Random();
+        randomIndex = random.nextInt(alphabetSize);
       }
 
       final character = characters[randomIndex];
@@ -34,6 +35,7 @@ extension type const TempoId(String value) implements Object {
     }
 
     final timePart = TempoId.generateTime(
+      timeLength: timeLength,
       time: time,
       startTime: startTime,
       padLeft: padLeft,
@@ -46,14 +48,16 @@ extension type const TempoId(String value) implements Object {
   /// Alias for [TempoId.generate] that returns a string
   /// instead of a [TempoId] object.
   static String generateString({
-    int randomLength = 21,
+    int? timeLength,
+    int? randomLength,
     int? time,
     DateTime? startTime,
-    bool padLeft = false,
+    bool? padLeft,
     Alphabet? alphabet,
     Random? random,
   }) {
     return TempoId.generate(
+      timeLength: timeLength,
       randomLength: randomLength,
       time: time,
       startTime: startTime,
@@ -68,14 +72,26 @@ extension type const TempoId(String value) implements Object {
   /// If [padLeft] is true, then it will be padded with the first
   /// character in [alphabet].
   factory TempoId.generateTime({
+    int? timeLength,
     int? time,
     DateTime? startTime,
-    bool padLeft = false,
+    bool? padLeft,
     Alphabet? alphabet,
   }) {
+    timeLength ??= 8;
     time ??= (DateTime.now().millisecondsSinceEpoch -
         (startTime?.millisecondsSinceEpoch ?? 0));
+    padLeft ??= true;
     alphabet ??= _defaultAlphabet;
+
+    final maxValue = getMaxValueOfFixedLength(
+      length: timeLength,
+      alphabet: alphabet,
+    );
+
+    // Handle overflow when time cannot be represented using
+    // timeLength and alphabet.
+    time %= (maxValue + 1);
 
     final millisEncoded = encodeNumber(
       number: time,
@@ -83,9 +99,7 @@ extension type const TempoId(String value) implements Object {
     );
 
     if (padLeft) {
-      int maxLength =
-          encodeNumber(number: 999999999, alphabet: alphabet).length;
-      return TempoId(millisEncoded.padLeft(maxLength, alphabet.value[0]));
+      return TempoId(millisEncoded.padLeft(timeLength, alphabet.value[0]));
     } else {
       return TempoId(millisEncoded);
     }

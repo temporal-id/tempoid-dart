@@ -6,6 +6,8 @@
 
 A library to generate URL-friendly, unique, and short IDs that are sortable by time. Inspired by nanoid and UUIDv7.
 
+See [tempoid.dev](https://tempoid.dev) for more information.
+
 ## Motivation
 
 - **URL-friendly**: The IDs are URL-friendly and can be used in web applications.
