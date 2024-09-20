@@ -15,6 +15,14 @@ See [tempoid.dev](https://tempoid.dev) for more information.
 - **Short**: The IDs are shorter than UUIDs because they are encoded with a larger alphabet.
 - **Sortable**: The IDs are sortable by time because a timestamp is encoded in the beginning of the ID.
 
+Example ID:
+
+```text
+0uoUX2EcwlFjsxim
+<------><------>
+  Time   Random
+```
+
 ## Getting Started
 
 ```yaml
@@ -37,6 +45,33 @@ void main() {
   // or generate a string directly
   String idString2 = TempoId.generateString();
 }
+```
+
+## Parameters
+
+### ➤ Length
+
+By default, the length of the ID is 16 characters.
+It contains an 8-character UNIX timestamp and an 8-character random string.
+You can change the length by passing the `timeLength` and `randomLength` parameters.
+
+```dart
+TempoId id = TempoId.generate(timeLength: 10, randomLength: 6);
+```
+
+By setting `timeLength` to zero, you can generate a random ID without a timestamp.
+`timeLength` should be at least 8 characters to ensure that there are no overflows within the next 7000 years.
+
+### ➤ Alphabet
+
+By default, the ID is encoded with an alphanumeric alphabet (`[A-Za-z0-9]`) without any special characters,
+making it easy to select and copy.
+You can change the alphabet by passing the `alphabet` parameter.
+
+```dart
+Alphabet alphabet = Alphabet('ABCDEF');
+TempoId id1 = TempoId.generate(alphabet: alphabet);
+TempoId id2 = TempoId.generate(alphabet: Alphabet.base64);
 ```
 
 ## License
