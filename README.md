@@ -20,15 +20,17 @@ See [tempoid.dev](https://tempoid.dev) for more information.
 Example ID:
 
 ```text
-0uoUX2EcwlFjsxim
-<------><------>
-  Time   Random
+0uoVxkjTFsrRX30O5B9fX
+<------><----------->
+  Time     Random
 ```
 
 ## Collisions
 
 - **Same millisecond**: There can be only a collision if two IDs are generated in the same millisecond.
-- **Low probability**: Even if two IDs are generated in the same millisecond, the probability of a collision is low: 1 in 200,000,000,000,000.
+- **Low probability**: Even if two IDs are generated in the same millisecond, the probability of a collision is very low.
+
+The 13 random characters exceed the randomness of UUIDv7 (≈10^23 vs ≈10^22).
 
 ## Getting Started
 
@@ -44,6 +46,8 @@ Every id is a string wrapped in a zero-cost [extension type](https://dart.dev/la
 
 To access the string value, use the `value` getter.
 
+Note: Auto import is only working while writing, there is no quick fix (See [Github Issue](https://github.com/dart-lang/sdk/issues/55443)).
+
 ```dart
 void main() {
   TempoId id = TempoId.generate();
@@ -58,8 +62,8 @@ void main() {
 
 ### ➤ Length
 
-By default, the length of the ID is 16 characters.
-It contains an 8-character UNIX timestamp and an 8-character random string.
+By default, the length of the ID is 21 characters.
+It contains an 8-character UNIX timestamp and an 13-character random string.
 You can change the length by passing the `timeLength` and `randomLength` parameters.
 
 ```dart

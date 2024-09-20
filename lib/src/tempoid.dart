@@ -24,7 +24,7 @@ extension type const TempoId(String value) implements Object {
     Alphabet? alphabet,
     Random? random,
   }) {
-    randomLength ??= 8;
+    randomLength ??= 13;
     alphabet ??= _defaultAlphabet;
     random ??= Random.secure();
 
