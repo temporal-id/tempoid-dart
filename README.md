@@ -4,6 +4,8 @@
 ![ci](https://github.com/temporal-id/tempoid-dart/actions/workflows/ci.yml/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+IDs with temporal ordering and short length.
+
 A library to generate URL-friendly, unique, and short IDs that are sortable by time. Inspired by nanoid and UUIDv7.
 
 See [tempoid.dev](https://tempoid.dev) for more information.
@@ -22,6 +24,11 @@ Example ID:
 <------><------>
   Time   Random
 ```
+
+## Collisions
+
+- **Same millisecond**: There can be only a collision if two IDs are generated in the same millisecond.
+- **Low probability**: Even if two IDs are generated in the same millisecond, the probability of a collision is low: 1 in 200,000,000,000,000.
 
 ## Getting Started
 
@@ -69,9 +76,12 @@ making it easy to select and copy.
 You can change the alphabet by passing the `alphabet` parameter.
 
 ```dart
+// use a different alphabet
+TempoId id2 = TempoId.generate(alphabet: Alphabet.base64);
+
+// or create a custom alphabet
 Alphabet alphabet = Alphabet('ABCDEF');
 TempoId id1 = TempoId.generate(alphabet: alphabet);
-TempoId id2 = TempoId.generate(alphabet: Alphabet.base64);
 ```
 
 ## License
