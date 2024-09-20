@@ -3,6 +3,18 @@ import 'dart:math';
 import 'package:tempoid/src/utils.dart';
 
 extension type const TempoId(String value) implements Object {
+  /// Generates a new TempoId with a time part and a random part.
+  /// The total length of the ID will be the sum of [timeLength]
+  /// and [randomLength]. Both default to 8.
+  ///
+  /// If [time] is not provided, it will default to the current time
+  /// in milliseconds since epoch.
+  /// If [startTime] is provided, then [time] will be calculated
+  /// as the difference between [startTime] and the current time.
+  /// If [padLeft] is true, then the time part will be padded with
+  /// the first character in [alphabet]. Default is true.
+  /// If [alphabet] is not provided, it will default to [Alphabet.alphanumeric].
+  /// If [random] is not provided, it will default to `Random.secure()`.
   factory TempoId.generate({
     int? timeLength,
     int? randomLength,
@@ -78,6 +90,10 @@ extension type const TempoId(String value) implements Object {
     bool? padLeft,
     Alphabet? alphabet,
   }) {
+    if (timeLength == 0) {
+      return const TempoId('');
+    }
+
     timeLength ??= 8;
     time ??= (DateTime.now().millisecondsSinceEpoch -
         (startTime?.millisecondsSinceEpoch ?? 0));
@@ -132,10 +148,10 @@ extension type const Alphabet(String value) {
       Alphabet(numbers.value + lowercase.value + uppercase.value);
 
   /// URL compatible characters. (64 chars)
-  static final Alphabet url = Alphabet('_-${alphanumeric.value}');
+  static final Alphabet url = Alphabet('${alphanumeric.value}_-');
 
   /// Base64 characters. (64 chars)
-  static final Alphabet base64 = Alphabet('+/${alphanumeric.value}');
+  static final Alphabet base64 = Alphabet('${alphanumeric.value}+/');
 
   /// Numbers and characters without lookalikes: 1, l, I, 0, O, o, u, v, 5, S, s, 2, Z. (49 chars)
   static const Alphabet noDoppelganger =
