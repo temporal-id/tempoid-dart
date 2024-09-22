@@ -145,7 +145,7 @@ extension type const Alphabet(String value) {
   /// Numbers and characters. (62 chars)
   /// There are no symbols or any special characters.
   static final Alphabet alphanumeric =
-      Alphabet(numbers.value + lowercase.value + uppercase.value);
+      Alphabet('AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz');
 
   /// URL compatible characters. (64 chars)
   static final Alphabet url = Alphabet('${alphanumeric.value}_-');
@@ -155,5 +155,5 @@ extension type const Alphabet(String value) {
 
   /// Numbers and characters without lookalikes: 1, l, I, 0, O, o, u, v, 5, S, s, 2, Z. (49 chars)
   static const Alphabet noDoppelganger =
-      Alphabet('346789ABCDEFGHJKLMNPQRTUVWXYabcdefghijkmnpqrtwxyz');
+      Alphabet('346789AaBbCcDdEeFfGgHhiJjKkLMmNnPpQqRrTtUVWwXxYyz');
 }
