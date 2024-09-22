@@ -1,8 +1,16 @@
 name: tempoid
 description: A library to generate URL-friendly, unique, and short IDs that are sortable by time. Inspired by nanoid and UUIDv7.
-version: 0.2.0
+version: 0.3.0
 repository: https://github.com/temporal-id/tempoid-dart
 homepage: https://tempoid.dev
+topics:
+  - id
+  - identifier
+  - uuid
+  - random
+  - nanoid
+funding:
+  - https://github.com/sponsors/Tienisto/
 
 environment:
   sdk: ^3.3.0
