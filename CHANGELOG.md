@@ -1,3 +1,7 @@
+## 0.4.0
+
+- feat: update `Alphabet.url` alphabet
+
 ## 0.3.0
 
 - feat: improve alphabet set

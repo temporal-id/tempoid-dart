@@ -144,11 +144,11 @@ extension type const Alphabet(String value) {
 
   /// Numbers and characters. (62 chars)
   /// There are no symbols or any special characters.
-  static final Alphabet alphanumeric = Alphabet(
+  static const Alphabet alphanumeric = Alphabet(
       '0123456789AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz');
 
   /// URL compatible characters. (64 chars)
-  static final Alphabet url = Alphabet('${alphanumeric.value}_-');
+  static final Alphabet url = Alphabet('${alphanumeric.value}-_');
 
   /// Base64 characters. (64 chars)
   static final Alphabet base64 = Alphabet('${alphanumeric.value}+/');
